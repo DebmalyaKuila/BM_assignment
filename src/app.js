@@ -31,9 +31,7 @@ app.get("/runScript", async(req, res) => {
 
 
     //send that mongoDB document as a response
-    res.send({
-        "trends": trends
-    })
+    res.send(trends)
 })
 
 // Default 404 page 
