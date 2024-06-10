@@ -2,8 +2,12 @@ const path = require("path")
 const express = require("express");
 const hbs = require("hbs")
 const {topTrends}=require("../selenium script/run")
-const app = express()
 
+//connect to mongodb database
+const insertData=require("../db/mongodb")
+
+
+const app = express()
 
 // paths for express config.
 const publicDirectoryPath = path.join(__dirname, "../public")
@@ -28,10 +32,9 @@ app.get("/", (req, res) => {
 app.get("/runScript", async(req, res) => {
     let trends=await topTrends()
     //now save these trends in mongoDB
-
-
+    const data=await insertData(trends)
     //send that mongoDB document as a response
-    res.send(trends)
+    res.send({"_id":data.insertedId,...trends})
 })
 
 // Default 404 page 
