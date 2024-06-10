@@ -1,23 +1,25 @@
 
-const buttonElm=document.querySelector('button[type="button"]')
+const buttonElm=document.getElementById("script-run-btn")
 
 buttonElm.addEventListener("click",(event)=>{
-event.preventDefault()
-
+    console.log("btn clicked");
 document.querySelector("#msg-1").textContent="Loading..."
 document.querySelector("#msg-2").textContent=""
-// setting up fetchAPI upon button click(on submit of form)
+// setting up fetchAPI upon button click
 fetch(`http://localhost:3000/runScript`).then((response)=>{
-        response.json().then((data)=>{
+    console.log("response -->",response);
+        response.text().then((data)=>{
            
             document.querySelector("#msg-1").textContent=``
-            document.querySelector("#msg-2").textContent=`${data}edweqq2fed`
+            document.querySelector("#msg-2").textContent=`${data}`
+            console.log("data-->",data);
         }).catch( error =>{
             document.querySelector("#msg-1").textContent=`Error occured`
             document.querySelector("#msg-2").textContent=`Something went wrong! Try again later.`
+            console.log(error);
         })
 }).catch( error =>{
-            document.querySelector("#msg-1").textContent=`Internal server error`
+            document.querySelector("#msg-1").textContent=`Error fetching data`
             document.querySelector("#msg-2").textContent=`Something went wrong! Try again later.`
 })
 
